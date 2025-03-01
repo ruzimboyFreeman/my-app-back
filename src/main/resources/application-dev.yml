@@ -1,0 +1,18 @@
+#spring:
+#  data:
+#    r2dbc:
+#      repositories:
+#        enabled: true
+#  application:
+#    name: my-blog-back
+#  r2dbc:
+#    url: r2dbc:postgresql://localhost:5433/blog
+#    username: postgres
+#    password: root123
+#  devtools:
+#    add-properties: false
+#logging:
+#  level:
+#    web: debug
+#
+#

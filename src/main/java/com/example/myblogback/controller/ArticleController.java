@@ -1,5 +1,6 @@
 package com.example.myblogback.controller;
 
+import com.example.myblogback.dto.ArticleDto;
 import com.example.myblogback.entity.Article;
 import com.example.myblogback.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/articles")
@@ -21,20 +24,20 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<Article>> getArticleById(@PathVariable Long id) {
+    public Mono<ResponseEntity<Article>> getArticleById(@PathVariable UUID id) {
         return articleService.getArticleById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Article>> createArticle(@RequestBody Article article) {
-        return articleService.createArticle(article)
+    public Mono<ResponseEntity<Article>> createArticle(@RequestBody ArticleDto articleDto) {
+        return articleService.createArticle(articleDto)
                 .map(savedArticle -> ResponseEntity.ok(savedArticle));
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Article>> updateArticle(@PathVariable Long id, @RequestBody Article article) {
+    public Mono<ResponseEntity<Article>> updateArticle(@PathVariable UUID id, @RequestBody Article article) {
         return articleService.updateArticle(id, article)
                 .map(updatedArticle -> ResponseEntity.ok(updatedArticle))
                 .defaultIfEmpty(ResponseEntity.notFound().build());

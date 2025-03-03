@@ -2,13 +2,18 @@ package com.example.myblogback.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public abstract class BaseEntity {
+
+    @Id
+    private UUID id;
 
     @CreatedDate
     @Column("created_at")
@@ -26,4 +31,11 @@ public abstract class BaseEntity {
 
     @Column("is_deleted")
     private boolean isDeleted = false;
+
+    public BaseEntity() {
+    }
+
+    public BaseEntity(UUID id) {
+        this.id = id == null ? UUID.randomUUID() : id;
+    }
 }
